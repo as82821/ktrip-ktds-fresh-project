@@ -3,6 +3,7 @@ package com.ktds.ktrip.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import com.ktds.ktrip.domain.UserVO;
 import com.ktds.ktrip.jdbc.DBCon;
@@ -326,6 +327,9 @@ public class UserDAO {
 			pstmt.executeUpdate();
 
 			System.out.println("가이드 신청 완료");
+		}catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return -1;

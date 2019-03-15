@@ -155,13 +155,7 @@
 </script>
 </head>
 <body>
-<%if(session.getAttribute("success")=="false"){%>
-<script>
-alert("회원가입 실패")
-</script>
-<%}
-session.invalidate();
-%>
+
 	<div class="limiter">
 		<div class="container-login100"
 			style="background-image: url('img/login4-bg.jpg');">

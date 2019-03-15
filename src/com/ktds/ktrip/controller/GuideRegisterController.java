@@ -65,11 +65,11 @@ public class GuideRegisterController extends HttpServlet{
 		}
 		UserDAO dao=new UserDAO();
 		int check = dao.registerGuide(user_id, second_lang, stay_duration, introduction, portfolio, id_document);
-		
+		System.out.println("가이드 신청 결과값 "+check);
 		if(check==-1) {
-			resp.sendRedirect("/ktrip/guidefail.jsp");
+			resp.sendRedirect("/ktrip/guide_failAction.jsp");
 		}else {
-			resp.sendRedirect("/ktrip/index.jsp");
+			resp.sendRedirect("/ktrip/guide_successAction.jsp");
 		}
 	}
 
