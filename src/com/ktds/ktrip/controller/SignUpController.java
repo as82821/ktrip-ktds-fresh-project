@@ -1,5 +1,6 @@
 package com.ktds.ktrip.controller;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -56,11 +57,21 @@ public class SignUpController extends HttpServlet {
 		if(multi.getFilesystemName("photo")==null) {
 			picturePath=defaultPhotoPath;
 		}else {
-			picturePath=savePath+"\\"+multi.getParameter("id")+"\\"+multi.getFilesystemName("photo");
+			//picturePath=savePath+"\\"+multi.getParameter("id")+"\\"+multi.getFilesystemName("photo");
+			picturePath=savePath+"\\"+multi.getParameter("id")+"-"+multi.getFilesystemName("photo");
+			/*
+			 * 사진경로에서 파일을 불러오고 사진의 이름을 유저ID로 변경
+			 */
+			File file=new File(savePath+"\\"+multi.getFilesystemName("photo"));
+			file.renameTo(new File(picturePath));
 		}
+
+		System.out.println("저장경로 "+savePath);
+		System.out.println("사진경로 "+picturePath);
+		System.out.println("폼에서 넘어오는 사진 이름 "+multi.getFilesystemName("photo"));
 		
+		System.out.println("이름변경완료");
 		System.out.println(vo.toString());
-		System.out.println(picturePath);
 
 		UserDAO dao = new UserDAO();
 		int cheackvalue = dao.insertUser(vo,picturePath);

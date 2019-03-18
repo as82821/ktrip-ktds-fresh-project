@@ -1,5 +1,6 @@
 package com.ktds.ktrip.controller;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -46,8 +47,8 @@ public class GuideRegisterController extends HttpServlet{
 		String second_lang=multi.getParameter("second_lang");
 		String stay_duration=multi.getParameter("stay_duration");
 		String introduction=multi.getParameter("introduction");
-		String portfolio=portfolio_savePath+"\\"+user_id+"\\"+multi.getFilesystemName("portfolio");
-		String id_document=id_documentsavePath+"\\"+user_id+"\\"+multi.getFilesystemName("id_document");
+		String portfolio=portfolio_savePath+"\\"+user_id+"-"+multi.getFilesystemName("portfolio");
+		String id_document=id_documentsavePath+"\\"+user_id+"-"+multi.getFilesystemName("id_document");
 		System.out.println("파일 업로드 완료");
 		
 		System.out.println("유저아이디 "+user_id);
@@ -56,13 +57,20 @@ public class GuideRegisterController extends HttpServlet{
 		System.out.println("포트폴리오 "+portfolio);
 		System.out.println("증빙자료 "+id_document);
 		
-		if(multi.getFilesystemName("photo")==null) {
+		if(multi.getFilesystemName("portfolio")==null) {
 			portfolio=defaultPhotoPath;
 			id_document=defaultPhotoPath;
 		}else {
-			portfolio=portfolio_savePath+"\\"+multi.getParameter("id")+"\\"+multi.getFilesystemName("portfolio");
-			id_document=id_documentsavePath+"\\"+multi.getParameter("id")+"\\"+multi.getFilesystemName("id_document");
+			/*
+			 * 사진경로에서 파일을 불러오고 사진의 이름을 유저ID로 변경
+			 */
+			File pfile=new File(portfolio_savePath+"\\"+multi.getFilesystemName("portfolio"));
+			pfile.renameTo(new File(portfolio));
+			pfile=new File(id_documentsavePath+"\\"+multi.getFilesystemName("id_document"));
+			pfile.renameTo(new File(id_document));
+			System.out.println("파일이름 변경 완료");
 		}
+		
 		UserDAO dao=new UserDAO();
 		int check = dao.registerGuide(user_id, second_lang, stay_duration, introduction, portfolio, id_document);
 		System.out.println("가이드 신청 결과값 "+check);
