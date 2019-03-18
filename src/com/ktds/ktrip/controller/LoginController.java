@@ -12,8 +12,6 @@ import javax.servlet.http.HttpSession;
 import com.ktds.ktrip.domain.UserVO;
 import com.ktds.ktrip.dao.UserDAO;
 
-
-
 @WebServlet("/loginCheck")
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;

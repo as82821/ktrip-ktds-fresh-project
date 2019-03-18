@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import com.ktds.ktrip.domain.UserVO;
 import com.ktds.ktrip.jdbc.DBCon;
+import com.ktds.ktrip.util.SHA256;
 
 
 
@@ -57,7 +58,7 @@ public class UserDAO {
 			pstmt = conn.prepareStatement(insertSql);
 
 			pstmt.setString(1, vo.getId());
-			pstmt.setString(2, vo.getPwd());
+			pstmt.setString(2, SHA256.getSHA256(vo.getPwd()));
 			pstmt.setString(3, vo.getName());
 			pstmt.setString(4, vo.getPhone_num());
 			pstmt.setString(5, vo.getEmail());
@@ -103,7 +104,7 @@ public class UserDAO {
 			 * login.jsp form에서 넘어온 ID,password
 			 */
 			String id = vo.getId();
-			String password = vo.getPwd();
+			String password = SHA256.getSHA256(vo.getPwd());
 
 			// id가 존재하는 id인지 검사
 			String idSelectSql = "select id from user where id = ?";
